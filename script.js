@@ -1,9 +1,11 @@
 let canvas = document.getElementById('snake');
 let context = canvas.getContext('2d');
 let box = 32;
+let intervalo = 150;
 
 let fundo = 'gray';
 let corCobrinha = 'black';
+let corCabeca = 'green';
 
 let corAlimento = 'red';
 
@@ -16,7 +18,7 @@ let baixo = 'down';
 let snake = [];
 snake[0] = {
     x: 8 * box,
-    y: 8 * box
+    y: 8 * box,
 }
 
 let direction = direita;
@@ -36,7 +38,10 @@ function criarBackGround() {
 //cria a cobrinha
 function criarSnake() {
     for (i = 0; i < snake.length; i++) {
-        context.fillStyle = corCobrinha;
+        if (snake.length == 1)
+            context.fillStyle = corCabeca;
+        else
+            context.fillStyle = corCobrinha;
         context.fillRect(snake[i].x, snake[i].y, box, box);
     }
 }
@@ -59,9 +64,9 @@ function movimentar(event) {
 
 //inicia o jogo
 function iniciarJogo() {
-    if (snake[0].x > 15 * box && direction == direita) snake[0].x = 0;
+    if (snake[0].x >= 16 * box && direction == direita) snake[0].x = 0;
     if (snake[0].x < 0 * box && direction == esquerda) snake[0].x = 16 * box;
-    if (snake[0].y > 15 * box && direction == baixo) snake[0].y = 0;
+    if (snake[0].y >= 16 * box && direction == baixo) snake[0].y = 0;
     if (snake[0].y < 0 * box && direction == cima) snake[0].y = 16 * box;
 
     for (i = 1; i < snake.length; i++) {
@@ -99,4 +104,4 @@ function iniciarJogo() {
     snake.unshift(newHead);
 }
 
-let jogo = setInterval(iniciarJogo, 100);
+let jogo = setInterval(iniciarJogo, intervalo);
